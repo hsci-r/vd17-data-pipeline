@@ -1,17 +1,21 @@
-#%%
-import logging
-import requests
+# %%
+import csv
 import html
+import logging
 from typing import Iterator
 
-#%%
+import requests
+
+# %%
 
 ppn = "006571840"
 #ppn = "007564856"
 
+
 def get_pica3(ppn: str) -> Iterator[list[str]]:
     f_i = 1
-    response = requests.get(f"https://kxp.k10plus.de/DB=1.28/PPNSET?PPN={ppn}&PRS=pica3&COOKIE=U1019510,K2413LOGIN,D1.28,Eb413a410-3,I0,B2413++++++,SY,QDEF,A,H12,,73,,76-77,,80,,82,,85-90,NUNIVERSIT%C3%84T+HELSINIKI,R128.214.197.60,FN", stream=True)
+    response = requests.get(
+        f"https://kxp.k10plus.de/DB=1.28/PPNSET?PPN={ppn}&PRS=pica3&COOKIE=U1019510,K2413LOGIN,D1.28,Eb413a410-3,I0,B2413++++++,SY,QDEF,A,H12,,73,,76-77,,80,,82,,85-90,NUNIVERSIT%C3%84T+HELSINIKI,R128.214.197.60,FN", stream=True)
     response.encoding = 'utf-8'
     start = len('<tr><td class="rec_title"><span>')
     end = -len('</span></td></tr>')
@@ -31,11 +35,10 @@ def get_pica3(ppn: str) -> Iterator[list[str]]:
                     sf_i += 1
                 f_i += 1
 
-#%%
+# %%
 
-import csv
 
-with open("data/processed/044s.tsv", 'rt') as inf, open("data/processed/044s-pica3.tsv",'wt') as of:
+with open("data/processed/044s.tsv", 'rt') as inf, open("data/processed/044s-pica3.tsv", 'wt') as of:
     cr = csv.reader(inf, delimiter="\t")
     cw = csv.writer(of, delimiter="\t")
     cw.writerow(["ppn", "field_number", "subfield_number", "field_code", "subfield_code", "value"])

@@ -46,7 +46,8 @@ def import_database(host: str, user: str, password: str, database: str, table: s
         p = Process(target=gunzip, args=(input, "pipe.tsv"))
         p.start()
         try:
-            cur.execute(f"LOAD DATA LOCAL INFILE 'pipe.tsv' INTO TABLE {table}_a LINES TERMINATED BY '\\r\\n' IGNORE 1 ROWS")
+            cur.execute(
+                f"LOAD DATA LOCAL INFILE 'pipe.tsv' INTO TABLE {table}_a LINES TERMINATED BY '\\r\\n' IGNORE 1 ROWS")
             print(f"Ingested {cur.rowcount} rows.")
             cur.execute("SHOW WARNINGS")
             print(f"Errors and warnings encountered: {cur.fetchall()}")

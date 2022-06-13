@@ -3,10 +3,10 @@
 
 import logging
 import os
+import re
 
 import click
 import requests
-import re
 
 logging.basicConfig(level=logging.INFO)
 query = "pica.ppn=" + "%20or%20pica.ppn=".join(f"{d}*" for d in range(0, 10))
