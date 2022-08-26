@@ -1,5 +1,5 @@
-CREATE TABLE {table}_a (
-  record_number MEDIUMINT UNSIGNED,
+CREATE TABLE vd17_auth_a (
+  a_record_number MEDIUMINT UNSIGNED,
   field_number SMALLINT UNSIGNED,
   subfield_number TINYINT UNSIGNED,
   field_code CHAR(4),
@@ -11,4 +11,13 @@ CREATE TABLE {table}_a (
   INDEX (value(255), record_number),
   INDEX (value(255), field_code, record_number),
   INDEX (value(255), subfield_code, field_code, record_number)
-) ENGINE=ARIA TRANSACTIONAL=0 PAGE_CHECKSUM=0 DEFAULT CHARACTER SET utf8mb4
+) ENGINE=ARIA TRANSACTIONAL=0 PAGE_CHECKSUM=0 DEFAULT CHARACTER SET utf8mb4;
+
+CREATE TABLE vd17_auth_c (
+  a_record_number INT UNSIGNED,
+  field_number SMALLINT UNSIGNED,
+  subfield_number TINYINT UNSIGNED,
+  field_code CHAR(4),
+  subfield_code CHAR(1),
+  value VARCHAR(2000)
+) ENGINE=ColumnStore DEFAULT CHARACTER SET utf8mb4;

@@ -72,6 +72,19 @@ lxml = ">=4.8.0,<5.0.0"
 tqdm = ">=4.64.0,<5.0.0"
 
 [[package]]
+name = "mdbutil"
+version = "0.1.1"
+description = "Utilities to run SQL and load a CSV/TSV (gz) file into MariaDB"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+click = ">=8.1.3,<9.0.0"
+PyMySQL = ">=1.0.2,<2.0.0"
+tqdm = ">=4.64.0,<5.0.0"
+
+[[package]]
 name = "pymysql"
 version = "1.0.2"
 description = "Pure Python MySQL Driver"
@@ -127,14 +140,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 
 [package.extras]
-brotli = ["brotlicffi (>=0.8.0)", "brotli (>=1.0.9)", "brotlipy (>=0.6.0)"]
-secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
+brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)", "brotlipy (>=0.6.0)"]
+secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "ipaddress", "pyOpenSSL (>=0.14)"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "be787015c5e4e804a05ee4970846fa854ef2a258f9599e16d568b52b7a7bcd9b"
+content-hash = "9273be8dc635fde8c138e06ce24ea8fe074767ccff136dd1a45c5fa13c4ff58d"
 
 [metadata.files]
 certifi = [
@@ -223,6 +236,10 @@ lxml = [
 marcxml2csv = [
     {file = "marcxml2csv-1.0.3-py3-none-any.whl", hash = "sha256:e76d9b37d1566437f7811bdfa4a62e0b22203758f5042b010e505676c4363ea3"},
     {file = "marcxml2csv-1.0.3.tar.gz", hash = "sha256:61a5962b051bb73b357c31d0c68d23aafd6e751c17fc95df43cfd37d2896d22a"},
+]
+mdbutil = [
+    {file = "mdbutil-0.1.1-py3-none-any.whl", hash = "sha256:532d5bcbe12f0522948da0294dcf38cfedd0cd077e5342ddd71cf883823bb026"},
+    {file = "mdbutil-0.1.1.tar.gz", hash = "sha256:faa63755f8dc2e2a2509ef0d1b4180b0947b17977889f0e304a2737b0b7cb06c"},
 ]
 pymysql = [
     {file = "PyMySQL-1.0.2-py3-none-any.whl", hash = "sha256:41fc3a0c5013d5f039639442321185532e3e2c8924687abe6537de157d403641"},
