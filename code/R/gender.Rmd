@@ -71,12 +71,14 @@ for (i in list_gnd)
 # Checking the field_codes and sub_field_codes regarding GND and gender
 ```{r}
 all_gnd_vd17$GND<-gsub("gnd/","",as.character(all_gnd_vd17$GND))
-gnd_authority <- read_tsv(here("data/processed/all_gnd.tsv.gz"), lazy = TRUE)
+gnd_authority <- read_tsv(here("vd17_auth.tsv.gz"), lazy = TRUE)
 authority_gnd_list <- gnd_authority[gnd_authority$value %in% all_gnd_vd17$GND, , drop = FALSE] %>%
   distinct(value)
 gnd_authority_filter <- gnd_authority %>%
   filter(subfield_code=="a",field_code %in% c("024","375"))
 ```
+
+
 # For some GNDs, there is not field_code "375", so gender is not specified.
 ```{r warning=FALSE}
 columns= c("GND","gender") 
