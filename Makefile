@@ -17,6 +17,9 @@ data/output/vd17/vd17.tsv.gz: data/work/vd17
 data/output/vd18/vd18.tsv.gz: data/work/vd18
 	picaxml2csv -o data/output/vd18/vd18.tsv.gz $(wildcard data/work/vd18/*.xml.gz)
 
+data/output/vd17/vd17_auth.tsv.gz:
+	marxml2csv -o data/output/vd17_auth.tsv.gz data/work/vd17_auth/vd17_auth_marcxml.zip
+
 data/work/vd17:
 	code/fetch-dataset.py vd17 -o data/work/vd17
 

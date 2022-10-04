@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-marcxml2csv = "^1.0.3"
+marcxml2csv = "^1.0.5"
 requests = "^2.27.1"
 PyMySQL = "^1.0.2"
 mdbutil = "^0.1.3"

@@ -38,7 +38,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "hsciutil"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 category = "main"
 optional = false
@@ -68,7 +68,7 @@ source = ["Cython (>=0.29.7)"]
 
 [[package]]
 name = "marcxml2csv"
-version = "1.0.4"
+version = "1.0.5"
 description = "A simple converter of MARCXML/PICAXML to CSV/TSV"
 category = "main"
 optional = false
@@ -76,7 +76,7 @@ python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
 click = ">=8.1.3,<9.0.0"
-hsciutil = ">=0.1.1,<0.2.0"
+hsciutil = ">=0.1.2,<0.2.0"
 lxml = ">=4.8.0,<5.0.0"
 tqdm = ">=4.64.0,<5.0.0"
 
@@ -156,7 +156,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "b71e2f9cc8915ca12b87995b1ab281cd2e5a4eaf717b5a383a673753f31952ec"
+content-hash = "5ae517dacb502703af73bad0b5a8704a655a1e13e04ea9978058f5c39e4e7fb5"
 
 [metadata.files]
 certifi = [
@@ -176,8 +176,8 @@ colorama = [
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
 ]
 hsciutil = [
-    {file = "hsciutil-0.1.1-py3-none-any.whl", hash = "sha256:b11290fee2c14766591fd729d591b01803561f2d1aa9ce9a56d25fb36e891e68"},
-    {file = "hsciutil-0.1.1.tar.gz", hash = "sha256:723892766f9114af96bd7b9e6d1e71a4edd1b2b8c44d14b5e94c4ba9cc4663d5"},
+    {file = "hsciutil-0.1.2-py3-none-any.whl", hash = "sha256:85aa6c4fb8a76303074e750fdee691c466a88b3cd4edb584f299ab13193e8c0f"},
+    {file = "hsciutil-0.1.2.tar.gz", hash = "sha256:cc558813fbcb71c71956059cf6777f2025eafbea10d237dae00953b74c4e4401"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -256,8 +256,8 @@ lxml = [
     {file = "lxml-4.9.1.tar.gz", hash = "sha256:fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f"},
 ]
 marcxml2csv = [
-    {file = "marcxml2csv-1.0.4-py3-none-any.whl", hash = "sha256:bac7905d482527ce1d04cd138ce437851e66e92b0d7436f5b94229f1a80e4c94"},
-    {file = "marcxml2csv-1.0.4.tar.gz", hash = "sha256:fd50899ef3fc1b66fbb24a0b68b3db719b9630a3f6cff35de7a166190a7d12d0"},
+    {file = "marcxml2csv-1.0.5-py3-none-any.whl", hash = "sha256:0a6b64608c0647501b9cc29811d63ae17e59ba0f9ba6772b7ce438356616cba7"},
+    {file = "marcxml2csv-1.0.5.tar.gz", hash = "sha256:0907d529917560812c123c11cd951013ae7b880f1e108ef7db3e4e8f79fad720"},
 ]
 mdbutil = [
     {file = "mdbutil-0.1.4-py3-none-any.whl", hash = "sha256:e10944895a1c540b3e8e9015b12869f56b9d15b271f2ac89862f56d401de0cc9"},
