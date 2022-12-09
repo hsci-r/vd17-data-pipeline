@@ -23,12 +23,11 @@ pp <- function(percentage, accuracy = 0.01) {
 # Extracting All GNDs of vd17
 ```{r}
 all_gnd_vd17 <- vd17_a %>%
-  filter(subfield_code=="7")%>%
-  select(record_number,field_code, value)%>%
-  mutate(GND=value)%>%
-  distinct(GND)%>%
+  filter(subfield_code == "7") %>%
+  select(record_number, field_code, value) %>%
+  mutate(GND = value) %>%
+  distinct(GND) %>%
   collect()
-
 ```
 
 ```{r install_python_packages}
@@ -36,18 +35,18 @@ reticulate::py_install("pandas")
 ```
 # Downloading the xml files of authority records
 ```{python}
-import urllib.request 
+import urllib.request
 
 ids=[]
 
 j=0
 for id in r.all_gnd_vd17['GND']:
-  
+
     if j%10000==0:
         print(j)
     try:
         result=urllib.request.urlretrieve("http://d-nb.info/"+id+"/about/marcxml", "data/work/vd17"+id+".xml")
-        
+
     except:
         ids.append(id)
         pass
@@ -56,62 +55,61 @@ for id in r.all_gnd_vd17['GND']:
 ```
 # Checking to not miss any files regarding connection interrupt
 ```{r}
-list <- list.files(path="data/work/vd17")
+list <- list.files(path = "data/work/vd17")
 
-list_gnd=as.list(all_gnd_vd17$GND)
+list_gnd <- as.list(all_gnd_vd17$GND)
 for (i in list_gnd)
 {
-  j <- paste(i,".xml",sep="")
+  j <- paste(i, ".xml", sep = "")
   result <- j %in% list
-  if (result==FALSE)
-  {print(j)}
+  if (result == FALSE) {
+    print(j)
+  }
 }
-
 ```
 # Checking the field_codes and sub_field_codes regarding GND and gender
 ```{r}
-all_gnd_vd17$GND<-gsub("gnd/","",as.character(all_gnd_vd17$GND))
+all_gnd_vd17$GND <- gsub("gnd/", "", as.character(all_gnd_vd17$GND))
 gnd_authority <- read_tsv(here("vd17_auth.tsv.gz"), lazy = TRUE)
 authority_gnd_list <- gnd_authority[gnd_authority$value %in% all_gnd_vd17$GND, , drop = FALSE] %>%
   distinct(value)
 gnd_authority_filter <- gnd_authority %>%
-  filter(subfield_code=="a",field_code %in% c("024","375"))
+  filter(subfield_code == "a", field_code %in% c("024", "375"))
 ```
 
 
 # For some GNDs, there is not field_code "375", so gender is not specified.
 ```{r warning=FALSE}
-columns= c("GND","gender") 
+columns <- c("GND", "gender")
 
-genders = data.frame(matrix(nrow = 0, ncol = length(columns))) 
-  
-colnames(genders) = columns
-  
+genders <- data.frame(matrix(nrow = 0, ncol = length(columns)))
+
+colnames(genders) <- columns
+
 
 j <- 1
 list_gnd_auth <- as.list(authority_gnd_list$value)
 for (i in list_gnd_auth)
 {
-  gen=""
-  record1 <- gnd_authority_filter[(gnd_authority_filter$value==i&gnd_authority_filter$field_code=="024"&gnd_authority_filter$subfield_code=="a"),]
-  if (length(rownames(record1))>0)
-  {rn <- record1$record_number
-  record2 <- gnd_authority_filter[(gnd_authority_filter$record_number==rn&gnd_authority_filter$field_code=="375"&gnd_authority_filter$subfield_code=="a"),]
-  if (length(rownames(record2))>0)
-  {gen <- record2$value}
+  gen <- ""
+  record1 <- gnd_authority_filter[(gnd_authority_filter$value == i & gnd_authority_filter$field_code == "024" & gnd_authority_filter$subfield_code == "a"), ]
+  if (length(rownames(record1)) > 0) {
+    rn <- record1$record_number
+    record2 <- gnd_authority_filter[(gnd_authority_filter$record_number == rn & gnd_authority_filter$field_code == "375" & gnd_authority_filter$subfield_code == "a"), ]
+    if (length(rownames(record2)) > 0) {
+      gen <- record2$value
+    }
   }
   genders[j, ] <- c(i, gen)
-  j <- j+1
+  j <- j + 1
 }
-
 ```
 
 ```{r}
 gnd_gender <- gs4_create(
   "sheets-gnd_gender",
-  sheets = genders)
+  sheets = genders
+)
 
 gnd_gender
 ```
-
-
