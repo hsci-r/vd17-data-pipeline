@@ -1809,18 +1809,18 @@ Joining, by = &quot;record_number&quot;Joining, by = &quot;record_number&quot;</
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgcHl0aG9uXG5pbXBvcnQgdXJsbGliLnJlcXVlc3QgXG5cbmlkcz1bXVxuXG5qPTBcbmZvciBpZCBpbiByLmFsbF9nbmRfdmQxN1snR05EJ106XG4gIFxuICAgIGlmIGolMTAwMDA9PTA6XG4gICAgICAgIHByaW50KGopXG4gICAgdHJ5OlxuICAgICAgICByZXN1bHQ9dXJsbGliLnJlcXVlc3QudXJscmV0cmlldmUoXCJodHRwOi8vZC1uYi5pbmZvL1wiK2lkK1wiL2Fib3V0L21hcmN4bWxcIiwgXCJkYXRhL3dvcmsvdmQxN1wiK2lkK1wiLnhtbFwiKVxuICAgICAgICBcbiAgICBleGNlcHQ6XG4gICAgICAgIGlkcy5hcHBlbmQoaWQpXG4gICAgICAgIHBhc3NcbiAgICBqKz0xXG5cbmBgYCJ9 -->
-<pre class="python"><code>import urllib.request 
+<pre class="python"><code>import urllib.request
 
 ids=[]
 
 j=0
 for id in r.all_gnd_vd17[&#39;GND&#39;]:
-  
+
     if j%10000==0:
         print(j)
     try:
         result=urllib.request.urlretrieve(&quot;http://d-nb.info/&quot;+id+&quot;/about/marcxml&quot;, &quot;data/work/vd17&quot;+id+&quot;.xml&quot;)
-        
+
     except:
         ids.append(id)
         pass
@@ -1888,12 +1888,12 @@ specified.</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sdW1ucz0gYyhcIkdORFwiLFwiZ2VuZGVyXCIpIFxuXG5nZW5kZXJzID0gZGF0YS5mcmFtZShtYXRyaXgobnJvdyA9IDAsIG5jb2wgPSBsZW5ndGgoY29sdW1ucykpKSBcbiAgXG5jb2xuYW1lcyhnZW5kZXJzKSA9IGNvbHVtbnNcbiAgXG5cbmogPC0gMVxubGlzdF9nbmRfYXV0aCA8LSBhcy5saXN0KGF1dGhvcml0eV9nbmRfbGlzdCR2YWx1ZSlcbmZvciAoaSBpbiBsaXN0X2duZF9hdXRoKVxue1xuICBnZW49XCJcIlxuICByZWNvcmQxIDwtIGduZF9hdXRob3JpdHlfZmlsdGVyWyhnbmRfYXV0aG9yaXR5X2ZpbHRlciR2YWx1ZT09aSZnbmRfYXV0aG9yaXR5X2ZpbHRlciRmaWVsZF9jb2RlPT1cIjAyNFwiJmduZF9hdXRob3JpdHlfZmlsdGVyJHN1YmZpZWxkX2NvZGU9PVwiYVwiKSxdXG4gIGlmIChsZW5ndGgocm93bmFtZXMocmVjb3JkMSkpPjApXG4gIHtybiA8LSByZWNvcmQxJHJlY29yZF9udW1iZXJcbiAgcmVjb3JkMiA8LSBnbmRfYXV0aG9yaXR5X2ZpbHRlclsoZ25kX2F1dGhvcml0eV9maWx0ZXIkcmVjb3JkX251bWJlcj09cm4mZ25kX2F1dGhvcml0eV9maWx0ZXIkZmllbGRfY29kZT09XCIzNzVcIiZnbmRfYXV0aG9yaXR5X2ZpbHRlciRzdWJmaWVsZF9jb2RlPT1cImFcIiksXVxuICBpZiAobGVuZ3RoKHJvd25hbWVzKHJlY29yZDIpKT4wKVxuICB7Z2VuIDwtIHJlY29yZDIkdmFsdWV9XG4gIH1cbiAgZ2VuZGVyc1tqLCBdIDwtIGMoaSwgZ2VuKVxuICBqIDwtIGorMVxufVxuXG5gYGAifQ== -->
-<pre class="r"><code>columns= c(&quot;GND&quot;,&quot;gender&quot;) 
+<pre class="r"><code>columns= c(&quot;GND&quot;,&quot;gender&quot;)
 
-genders = data.frame(matrix(nrow = 0, ncol = length(columns))) 
-  
+genders = data.frame(matrix(nrow = 0, ncol = length(columns)))
+
 colnames(genders) = columns
-  
+
 
 j &lt;- 1
 list_gnd_auth &lt;- as.list(authority_gnd_list$value)
