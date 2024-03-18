@@ -9,7 +9,7 @@ import requests
 # %%
 
 ppn = "006571840"
-#ppn = "007564856"
+# ppn = "007564856"
 
 
 def get_pica3(ppn: str) -> Iterator[list[str]]:
