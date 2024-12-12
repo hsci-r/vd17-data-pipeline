@@ -11,6 +11,7 @@ status/vd17_auth_db.loaded: data/output/vd17/vd17_auth.tsv.gz
 	run-sql -u hsci -h vm2505.kaj.pouta.csc.fi -d vd17 -p ${SQL_PASSWORD} -s src/sql/create_vd17_auth.sql
 	load-db -u hsci -h vm2505.kaj.pouta.csc.fi -d vd17 -t vd17_auth_a -p ${SQL_PASSWORD} -i data/output/vd17/vd17_auth.tsv.gz
 	run-sql -u hsci -h vm2505.kaj.pouta.csc.fi -d vd17 -p ${SQL_PASSWORD} -s "INSERT INTO vd17_auth_c SELECT * FROM vd17_auth_a"
+	run-sql -u hsci -h vm2505.kaj.pouta.csc.fi -d vd17 -p ${SQL_PASSWORD} -s src/sql/auth_record_number_to_gnd_id.sql
 	touch status/vd17_db.loaded
 
 data/output/vd17/vd17.tsv.gz: status/vd17.fetched
