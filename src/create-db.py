@@ -37,7 +37,7 @@ def gunzip(input: str, output: str):
 def import_database(host: str, user: str, password: str, database: str, table: str, input: str):
     with pymysql.connect(host=host, user=user, password=password, charset='utf8mb4', local_infile=True,
                          autocommit=True) as con, con.cursor() as cur:
-        cur.execute(f"CREATE DATABASE IF NOT EXISTS {database}")
+        cur.execute(f"CREATE DATABASE IF NOT EXISTS {database} CHARACTER SET utf8mb4 COLLATE utf8mb4_bin")
         cur.execute(f"USE {database}")
         cur.execute(f"DROP TABLE IF EXISTS {table}_a")
         cur.execute(read_relative("sql/table_a.sql").format(table=table))

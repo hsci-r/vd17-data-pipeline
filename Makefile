@@ -20,7 +20,7 @@ data/output/vd17/vd17.tsv.gz: status/vd17.fetched
 data/output/vd18/vd18.tsv.gz: status/vd18.fetched
 	picaxml2csv -o data/output/vd18/vd18.tsv.gz data/work/vd18/*.xml.gz
 
-data/output/vd17/vd17_auth.tsv.gz: data/work/vd17_auth/vd17_auth.mrcx.gz
+data/output/vd17/vd17_auth.tsv.gz: data/work/vd17_auth/vd17_auth.mrcx.gz status/vd17_auth.fetched
 	marcxml2csv -o data/output/vd17/vd17_auth.tsv.gz data/work/vd17_auth/vd17_auth.mrcx.gz
 
 status/vd17_auth.fetched: status/vd17_db.loaded

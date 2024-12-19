@@ -13,7 +13,7 @@ CREATE TABLE vd17_auth_a (
   INDEX (value(255), a_record_number),
   INDEX (value(255), field_code, a_record_number),
   INDEX (value(255), subfield_code, field_code, a_record_number)
-) ENGINE=ARIA TRANSACTIONAL=0 PAGE_CHECKSUM=0 DEFAULT CHARACTER SET utf8mb4;
+) ENGINE=ARIA TRANSACTIONAL=0 PAGE_CHECKSUM=0 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 DROP TABLE IF EXISTS vd17_auth_c;
 
@@ -24,4 +24,4 @@ CREATE TABLE vd17_auth_c (
   field_code CHAR(4) NOT NULL,
   subfield_code CHAR(1), -- empty field_code is null in ColumnStore
   value VARCHAR(2000) NOT NULL
-) ENGINE=ColumnStore DEFAULT CHARACTER SET utf8mb4;
+) ENGINE=ColumnStore DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
