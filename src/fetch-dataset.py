@@ -8,6 +8,7 @@ import re
 
 import click
 import requests
+from tqdm.auto import tqdm
 
 logging.basicConfig(level=logging.INFO)
 query = "pica.ppn=" + "%20or%20pica.ppn=".join(f"{d}*" for d in range(0, 10))
@@ -24,9 +25,9 @@ def fetch_dataset(dataset: str, output: str):
     total_records = int(re.search("<zs:numberOfRecords>([0-9]*)</zs:numberOfRecords>", response).group(1))
     batch_size = 1000
     logging.info(f"Going to process {total_records} in batches of {batch_size}.")
-    for start in range(1, total_records, batch_size):
+    for start in tqdm(range(1, total_records, batch_size)):
         with gzip.open(f'{output}/{dataset}-pica-{str(start)}.xml.gz', 'wb') as f:
-            logging.info(f"Processing batch {start} of {total_records}.")
+            # logging.info(f"Processing batch {start} of {total_records}.")
             c = requests.get(
                 f"https://sru.k10plus.de/{dataset}?version=2.0&operation=searchRetrieve&query={query}&maximumRecords={batch_size}&startRecord={start}&recordSchema=picaxml").content
             f.write(c)

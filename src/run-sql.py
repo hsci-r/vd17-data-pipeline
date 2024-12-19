@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import sys
 from io import StringIO
 
 import click
@@ -22,7 +23,8 @@ def run_sql(host: str, user: str, password: str, database: str, sql: StringIO):
                 warnings = cur.fetchall()
                 if len(warnings) > 0:
                     print(f"Errors and warnings encountered: {warnings} while running {statement}.")
+                    return len(warnings)
 
 
 if __name__ == '__main__':
-    run_sql()
+    sys.exit(run_sql())

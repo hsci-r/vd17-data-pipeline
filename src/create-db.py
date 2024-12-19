@@ -46,23 +46,28 @@ def import_database(host: str, user: str, password: str, database: str, table: s
         p = Process(target=gunzip, args=(input, "pipe.tsv"))
         p.start()
         try:
-            cur.execute(
-                f"LOAD DATA LOCAL INFILE 'pipe.tsv' INTO TABLE {table}_a CHARACTER SET UTF8 LINES TERMINATED BY '\\r\\n' IGNORE 1 ROWS")
-            print(f"Ingested {cur.rowcount} rows.")
-            cur.execute("SHOW WARNINGS")
-            print(f"Errors and warnings encountered: {cur.fetchall()}")
+            cur.execute(f"LOAD DATA LOCAL INFILE 'pipe.tsv' INTO TABLE {
+                        table}_a CHARACTER SET UTF8 FIELDS TERMINATED BY '\\t' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '' LINES TERMINATED BY '\\r\\n' IGNORE 1 ROWS")
             p.join()
-            print("Enabling keys")
-            cur.execute(f"ALTER TABLE {table}_a ENABLE KEYS")
-            print("Copying table to ColumnStore")
-            cur.execute(f"DROP TABLE IF EXISTS {table}_c")
-            cur.execute(read_relative("sql/table_c.sql").format(table=table))
-            cur.execute(f"INSERT INTO {table}_c SELECT * FROM {table}_a")
-            cur.execute("SHOW WARNINGS")
-            print(f"Errors and warnings encountered: {cur.fetchall()}")
         finally:
             p.terminate()
             os.remove("pipe.tsv")
+        print(f"Ingested {cur.rowcount} rows.")
+        cur.execute("SHOW WARNINGS")
+        warnings = cur.fetchall()
+        if warnings:
+            print(f"Errors and warnings encountered: {warnings}")
+        print("Enabling keys")
+        cur.execute(f"ALTER TABLE {table}_a ENABLE KEYS")
+        # The maximum length for a ColumnStore varchar is 2000, while we're currently supporting 4000 for the Aria table
+        # print("Copying table to ColumnStore")
+        # cur.execute(f"DROP TABLE IF EXISTS {table}_c")
+        # cur.execute(read_relative("sql/table_c.sql").format(table=table))
+        # cur.execute(f"INSERT INTO {table}_c SELECT * FROM {table}_a")
+        # cur.execute("SHOW WARNINGS")
+        # warnings = cur.fetchall()
+        # if warnings:
+        #    print(f"Errors and warnings encountered: {warnings}")
 
 
 if __name__ == '__main__':

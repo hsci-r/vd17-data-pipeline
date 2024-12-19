@@ -13,8 +13,8 @@ WHERE field_code="006W";
 DROP TABLE IF EXISTS vd17_id_c;
 
 CREATE TABLE vd17_id_c (
-    record_number INT UNSIGNED,
-    vd17_id VARCHAR(255)
+   record_number INT UNSIGNED,
+   vd17_id VARCHAR(255)
 ) ENGINE=ColumnStore;
 
 INSERT INTO vd17_id_c

@@ -1,8 +1,8 @@
 CREATE TABLE {table}_c (
-  record_number INT UNSIGNED,
-  field_number SMALLINT UNSIGNED,
-  subfield_number TINYINT UNSIGNED,
-  field_code CHAR(4),
-  subfield_code CHAR(1),
-  value VARCHAR(2000)
+  record_number INT UNSIGNED NOT NULL,
+  field_number SMALLINT UNSIGNED NOT NULL,
+  subfield_number TINYINT UNSIGNED NOT NULL,
+  field_code CHAR(4) NOT NULL,
+  subfield_code CHAR(1) NOT NULL,
+  value VARCHAR(2000) NOT NULL
 ) ENGINE=ColumnStore DEFAULT CHARACTER SET utf8mb4
