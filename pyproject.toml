@@ -8,11 +8,14 @@ authors = [
 license = {text = "MIT"}
 requires-python = "<4.0,>=3.10"
 dependencies = [
-    "marcxml2csv>=1.0.5",
     "requests>=2.32.3",
     "PyMySQL>=1.1.1",
     "mdbutil>=0.1.4",
     "aiohttp>=3.11.10",
     "click>=8.1.7",
     "more-itertools>=10.5.0",
+    "pyarrow>=20.0.0",
+    "polars>=1.30.0",
+    "narwhals>=1.41.0",
+    "bibxml2>=1.1.4",
 ]

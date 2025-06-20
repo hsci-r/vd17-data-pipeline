@@ -5,21 +5,19 @@ import gzip
 import logging
 import os
 import re
-import shutil
 import unicodedata
-import zipfile
-from multiprocessing import Process
-from typing import TextIO
+from typing import Iterable, TextIO
 
 import aiohttp
 import click
-import pymysql
+import polars as pl
 import tqdm
 from more_itertools import chunked
 
 
-async def fetch(gnds: list[str], of: TextIO, ef: TextIO):
+async def fetch(gnds: Iterable[str], of: TextIO, ef: TextIO):
     error_regex = re.compile('.*<diagnostics>')
+    all_records = set[str]()
     record_regex = re.compile('<record xmlns="http://www.loc.gov/MARC21/slim" type="Authority">.*?</record>', re.DOTALL)
     async with aiohttp.ClientSession() as session:
         for chunked_gnds in tqdm.tqdm(list(chunked(gnds, 50)), unit="request"):
@@ -39,23 +37,27 @@ async def fetch(gnds: list[str], of: TextIO, ef: TextIO):
                     logging.warning(f"Difference of {len(records) - 50} records for {response.url}.")
                 if len(records) == 100:
                     raise ValueError("Too many records received, maybe missing something.")
-                for record in records:
-                    of.write(record)
+                all_records.update(records)
+    for record in all_records:
+        of.write(record)
 
 
 @click.command
-@click.option("-p", "--password", help="password to use", required="True")
-@click.option("-u", "--user", help="user to use", required="True")
-@click.option("-h", "--host", help="database host", required="True")
-@click.option("-d", "--database", help="database to use", required="True")
-@click.option("-t", "--table", help="table name", required="True")
+@click.option("-i", "--input", help="input parquet file", required="True")
+@click.option("-g", "--gnd", help="input additional gnd file")
 @click.option("-o", "--output", help="output marcxml.gz file", required="True")
 @click.option("-e", "--errors", help="output error log file", required="True")
-def fetch_auths(host: str, user: str, password: str, database: str, table: str, output: str, errors: str):
-    with pymysql.connect(host=host, user=user, password=password, database=database, charset='utf8mb4', local_infile=True,
-                         autocommit=True) as con, con.cursor() as cur:
-        cur.execute(f"SELECT DISTINCT SUBSTR(value,5) from {table}_a WHERE value LIKE 'gnd/%'")
-        gnds = list(map(lambda t: t[0], cur.fetchall()))
+def fetch_auths(input: str, output: str, gnd: str | None, errors: str):
+    gnds = set[str]()
+    if gnd:
+        with open(gnd, 'rt') as gnd_file:
+            gnds.update((gnd.replace("gnd/", "") for gnd in gnd_file.read().splitlines()))
+    gnds.update(pl.scan_parquet(input)
+                .filter(pl.col("value").str.starts_with("gnd/"))
+                .select(pl.col("value"))
+                .collect()
+                .get_column("value").str.replace("^gnd/", "").to_list()
+                )
     os.makedirs(os.path.dirname(output), exist_ok=True)
     with gzip.open(output, 'wt') as of:
         of.write('<?xml version="1.0" encoding="UTF-8"?>\n<records>\n')
